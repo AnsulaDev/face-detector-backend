@@ -10,15 +10,16 @@ const {handleImage, handleApiCall} = require('./controllers/image.controller');
 
 
 
+
 const db = knex({
     client: 'pg',
     connection: {
-        host: '127.0.0.1',
-        user: 'postgres',
-        password:'Virus',
-        database:'face-detector'
-        
-        
+    
+        DB_NAME:'railway',
+        DB_PASSWORD:'OorDKsfT5eGS582Lxukq',
+        DB_USER:'postgres',
+        DB_URI:'postgresql://postgres:OorDKsfT5eGS582Lxukq@containers-us-west-121.railway.app:6882/railway',      
+        PORT:'6882'
     }
 });
 
@@ -41,6 +42,6 @@ app.put('/image',handleImage(db));
 app.post('/imageurl',(req,res) => {handleApiCall(req, res)});
 
 
-app.listen(4000, () => {
-    console.log('server is running on port 4000');
+app.listen(process.env.PORT || 4000, () => {
+    console.log(`app is runnin on port ${process.env.PORT}`);
 })
