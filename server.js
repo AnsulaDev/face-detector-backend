@@ -10,16 +10,12 @@ const {handleImage, handleApiCall} = require('./controllers/image.controller');
 
 
 
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex({
     client: 'pg',
-    connection: {
-    
-        DB_NAME:'railway',
-        DB_PASSWORD:'OorDKsfT5eGS582Lxukq',
-        DB_USER:'postgres',
-        DB_URI:'postgresql://postgres:OorDKsfT5eGS582Lxukq@containers-us-west-121.railway.app:6882/railway',      
-        PORT:'6882'
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+    rejectUnauthorized: true
     }
 });
 
