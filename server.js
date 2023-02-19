@@ -7,6 +7,8 @@ const register = require('./controllers/register.controller');
 const signin = require('./controllers/signin.controller');
 const profile = require('./controllers/profile.controller');
 const {handleImage, handleApiCall} = require('./controllers/image.controller');
+const dotenv = require('dotenv');
+const db = require('./config/config');
 
 
 
