@@ -7,21 +7,27 @@ const register = require('./controllers/register.controller');
 const signin = require('./controllers/signin.controller');
 const profile = require('./controllers/profile.controller');
 const {handleImage, handleApiCall} = require('./controllers/image.controller');
-const dotenv = require('dotenv');
-const db = require('./config/config');
+require('dotenv').config();
+//const db = require('./config/config');
 
 
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
 const db = knex({
     client: 'pg',
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-    rejectUnauthorized: true
+    connection: {
+        host:process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password:process.env.DB_PASSWORD,
+        database:process.env.DB_NAME,
+    
+        
+        
     }
 });
 
 
+const port = process.env.PORT || 4000;
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -29,7 +35,7 @@ app.use(cors());
 
 app.get('/',(req,res) => {
     res.send('success');
-})
+});
 
 app.post('/signin',signin.handleSigin( db, bcrypt));
 
@@ -40,6 +46,6 @@ app.put('/image',handleImage(db));
 app.post('/imageurl',(req,res) => {handleApiCall(req, res)});
 
 
-app.listen(process.env.PORT || 4000, () => {
-    console.log(`app is runnin on port ${process.env.PORT}`);
-})
+app.listen(port, () => {
+    console.log(`app is runnin on por ${port}`);
+});
